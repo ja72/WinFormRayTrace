@@ -20,16 +20,15 @@ namespace JA.Geometry
     /// </summary>
     public class Light
     {
-        static readonly Random rng = new Random();
+
         #region	Factory
-        public Light(Vector3 position, float intensity, float jitter = 0)
-            : this(Color.White, position, intensity, jitter) { }
-        public Light(Color color, Vector3 position, float intensity, float jitter = 0)
+        public Light(Vector3 position, float intensity)
+            : this(Color.White, position, intensity) { }
+        public Light(Color color, Vector3 position, float intensity)
         {
             this.Color = color;
             this.Position = position;
             this.Intensity= intensity;
-            this.Jitter = jitter;
         }
         #endregion
 
@@ -37,15 +36,7 @@ namespace JA.Geometry
         public Color Color { get; }
         public Vector3 Position { get; }
         public float Intensity { get; }
-        public float Jitter { get; }
         #endregion
 
-        #region Methods
-        public Vector3 JitteredPosition()
-        {
-            var delta = new Vector3((float)rng.NextDouble()*2-1, (float)rng.NextDouble()*2-1, (float)rng.NextDouble()*2-1);
-            return Position + Jitter * delta;
-        }
-        #endregion
     }
 }

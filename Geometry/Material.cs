@@ -59,8 +59,5 @@ namespace JA.Geometry
         public float Opacity { get; }
         #endregion
 
-        #region Methods
-
-        #endregion
     }
 }

@@ -43,23 +43,6 @@ namespace JA.Geometry
             return new Vector2(x, y);
         }
 
-        public Vector2[] AllPixels()
-        {
-            int ht = Target.Height, wt = Target.Width;
-            float t = Helpers.Tand(Fov/2);
-            Vector2 vector;
-            var buffer = new Vector2[ht*wt];
-            for (int i = 0; i < ht; i++)
-            {
-                for (int j = 0; j < wt; j++)
-                {
-                    vector.X = +(2*(j+0.5f)/(float)(wt-1)-1)*(t*wt)/ht;
-                    vector.Y = -(2*(i+0.5f)/(float)(ht-1)-1)*t;
-                    buffer[j+i*wt] = vector;
-                }
-            }
-            return buffer;
-        }
         #endregion
     }
 }

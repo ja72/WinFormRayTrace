@@ -10,10 +10,10 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Numerics;
-
-using static System.Math;
 using System.Drawing;
 using System.Drawing.Imaging;
+
+using static System.Math;
 
 namespace JA.Geometry
 {
@@ -39,10 +39,10 @@ namespace JA.Geometry
         }
         public FrameBuffer(Scene scene, Camera camera) : this(camera.Target)
         {
-#if PARALLEL
+#if !DEBUG
             var opts = new ParallelOptions()
             {
-                MaxDegreeOfParallelism = 6,
+                // MaxDegreeOfParallelism = 4,
             };
             Parallel.For(0, Height, opts, (i) =>
             {
@@ -53,36 +53,12 @@ namespace JA.Geometry
                 }
             });
 #else        
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < Width; j++)
                 {
                     var pos = camera.PixelToScreen(i, j);
                     this[i, j] = scene.CastRay(pos, 0);
-                }
-            }
-#endif
-        }
-        public FrameBuffer(int width, int height, DrawPixel draw) : this(width, height)
-        {
-#if PARALLEL
-            var opts = new ParallelOptions()
-            {
-                MaxDegreeOfParallelism = 6,                
-            };
-            Parallel.For(0, height, opts, (i) =>
-            {                
-                for (int j = 0; j < width; j++)
-                {
-                    this[i, j] = draw(i, j);
-                }
-            });
-#else        
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    this[i, j] = draw(i,j);
                 }
             }
 #endif
@@ -101,39 +77,6 @@ namespace JA.Geometry
         #endregion
 
         #region Methods
-        public void Blur(float strength = 0)
-        {
-            var corner_strength = 0.3f;
-            var b = strength/(4*(corner_strength+1));
-            var a = corner_strength*b;
-            var c = 1-strength;
-
-            var buffer = new Vector3[Width*Height];
-
-            // | tl tm tr |
-            // | ml mm mr |
-            // | bl bm br |
-            Vector3 tl, tm, tr, ml, mm, mr, bl, bm, br;
-
-            for (int k = 0; k < buffer.Length; k++)
-            {
-                int i = k/Width;
-                int j = k%Width;
-                mm = Pixels[j + i * Width];
-
-                tl = i>0 && j>0 ? this[i-1, j-1] : mm;
-                ml = j>0 ? this[i, j-1] : mm;
-                bl = j>0 && i<Height-1 ? this[i+1, j-1] : mm;
-                tm = i>0 ? this[i-1, j] : mm;
-                tr = i>0 && j<Width-1 ? this[i-1, j+1] : mm;
-                bm = i<Height-1 ? this[i+1, j] : mm;
-                br = i<Height-1 && j<Width-1 ? this[i+1, j+1] : mm;
-                mr = j<Width-1 ? this[i, j+1] : mm;
-                buffer[k] = a*tl+b*tm+a*tr+b*ml+c*mm+b*mr+a*bl+b*bm+a*br;
-            }
-
-            Pixels = buffer;
-        }
 
         public Bitmap Render(PixelFormat format)
         {

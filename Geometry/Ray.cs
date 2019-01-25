@@ -17,7 +17,7 @@ namespace JA.Geometry
     /// <summary>
     /// Defines a Ray
     /// </summary>
-    public struct Ray
+    public struct Ray : IEquatable<Ray>
     {
         #region	Factory
         public Ray(Vector3 origin, Vector3 direction )
@@ -53,7 +53,6 @@ namespace JA.Geometry
         public Vector3 Along(float distance) => Origin + distance * Direction;
 
         #endregion
-
 
         #region IEquatable Members
         /// <summary>

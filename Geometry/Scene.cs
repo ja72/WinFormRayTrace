@@ -88,8 +88,6 @@ namespace JA.Geometry
                 }
             }
 
-            //return min_distance < 1000;
-
             var checkerboard_dist = float.MaxValue;
             if (Abs(ray.Direction.Y)>1e-3f)
             {
@@ -168,11 +166,6 @@ namespace JA.Geometry
         public Bitmap Render(Size target, PixelFormat format = PixelFormat.Format32bppRgb)
         {
             var camera = new Camera(target);
-            //var buffer = new FrameBuffer(target.Width, target.Height, (i, j) =>
-            //{
-            //    var pos = camera.PixelToScreen(i, j);
-            //    return CastRay(pos);
-            //});
             var buffer = new FrameBuffer(this, camera);
             return buffer.Render(format);
         }
