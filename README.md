@@ -4,7 +4,7 @@ C# port of the tiny ray tracer described in https://github.com/ssloy/tinyraytrac
 Here are some interesting features:
 
  - It is WinForms desktop application that draws the graphics on a `PictureBox` by rendering a bitmap and assigning it to the UI.
- = Bitmap rendering uses `LockBits()` and unsafe poiners for fast processing.
+ - Bitmap rendering uses `LockBits()` and unsafe poiners for fast processing. It supports 24bit and 32bit bitmaps only.
  - Uses `System.Numerics` for SIMD Vectors 
  - Outer loop is `Parallel.For()` in release mode, and regular loop in debug mode.
  - Is a lot more OOP with the intent of creating classes to combine related code.
