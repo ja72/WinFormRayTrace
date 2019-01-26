@@ -98,13 +98,14 @@ namespace JA.Geometry
                     checkerboard_dist = d;
                     hit = pt;
                     normal = Vector3.UnitY;
-                    var color = ((int)(.5f*hit.X+1000) + (int)(.5f*hit.Z)) % 2 > 0 ? Color.White.ToVector()*0.3f : Color.Orange.ToVector()*0.3f;
+                    var color = ((int)(0.5f*hit.X+1000) + (int)(0.5f*hit.Z)) % 2 > 0 ? Color.White.ToVector()*0.3f : Color.Orange.ToVector()*0.3f;
                     material = new Material(color.RGB());
                 }
             }
             return Min(min_distance, checkerboard_dist)<1000;
         }
-        public Vector3 CastRay(Vector2 position, int depth = 0) => CastRay(Ray.Generate(position), depth);
+        public Vector3 CastRay(Vector2 position, int depth = 0) 
+            => CastRay(Ray.Generate(position), depth);
         public Vector3 CastRay(Ray ray, int depth = 0)
         {
             if (depth<MaxDepth && Intersect(ray, out Vector3 point, out Vector3 normal, out Material material))

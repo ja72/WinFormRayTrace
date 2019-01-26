@@ -52,6 +52,11 @@ namespace JA.Geometry
 
         public Vector3 Along(float distance) => Origin + distance * Direction;
 
+        public override string ToString()
+        {
+            return $"{Origin}+t*{Direction}";
+        }
+
         #endregion
 
         #region IEquatable Members

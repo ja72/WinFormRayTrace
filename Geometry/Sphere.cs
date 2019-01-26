@@ -19,6 +19,7 @@ namespace JA.Geometry
     /// </summary>
     public struct Sphere
     {
+        static int last_id = 0;
         #region	Factory
         public Sphere(Vector3 center, float radius) : this(center, radius, Material.Default) { }
         public Sphere(Vector3 center, float radius, Material material)
@@ -26,6 +27,7 @@ namespace JA.Geometry
             this.Center= center;
             this.Radius = radius;
             this.Material = material;
+            this.Id=++last_id;
         }
         #endregion
 
@@ -38,7 +40,7 @@ namespace JA.Geometry
         /// The sphere radius
         /// </summary>
         public float Radius { get; }
-
+        public int Id { get; }
         public Material Material { get; }
         #endregion
 
@@ -46,13 +48,13 @@ namespace JA.Geometry
         /// <summary>
         /// Check if ray hits the sphere.
         /// </summary>
-        /// <param name="line">The ray.</param>
+        /// <param name="ray">The ray.</param>
         /// <param name="t0">The output parameter for the hit location t0.</param>
         /// <returns></returns>
-        public bool Intersect(Ray line, ref float t0)
+        public bool Intersect(Ray ray, ref float t0)
         {
-            Vector3 L = Center - line.Origin;
-            var tca = Vector3.Dot(L, line.Direction);
+            Vector3 L = Center - ray.Origin;
+            var tca = Vector3.Dot(L, ray.Direction);
             var d2 = Vector3.Dot(L,L) - tca*tca;
             if (d2 > Radius*Radius)
             {

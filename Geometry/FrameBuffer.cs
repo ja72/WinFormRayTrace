@@ -52,7 +52,7 @@ namespace JA.Geometry
                     this[i, j] = scene.CastRay(pos, 0);
                 }
             });
-#else        
+#else
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
