@@ -16,3 +16,7 @@ Here are some interesting features:
    - `Ray` - This is basic ray with a vector origin and a vector direction.
    - `Sphere` - This is a basic sphere with a center, radius and material information.
   - Drawing on the UI is done asynchronously in order to be more responsive since each frame might take more than 500 milliseconds to render.
+
+The screen should look as follows:
+
+![2019-01-26 14_51_47-ray trace 784 562 scene 582 9 ms](https://user-images.githubusercontent.com/22509289/51793622-4e59e700-2191-11e9-91a6-773420b66b18.png)
